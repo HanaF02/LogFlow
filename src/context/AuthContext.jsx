@@ -7,7 +7,6 @@ export function AuthProvider({ children }) {
   const [developer, setDeveloper] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Restore developer from localStorage on refresh
   useEffect(() => {
     const stored = localStorage.getItem("developer");
     if (stored) setDeveloper(JSON.parse(stored));
@@ -21,7 +20,6 @@ export function AuthProvider({ children }) {
       localStorage.setItem("developer", JSON.stringify(res.data));
       return res.data;
     } catch (err) {
-      // FIX: Throw the actual 'err' object variable caught in the parameter block above
       throw err;
     }
   };
@@ -33,7 +31,6 @@ export function AuthProvider({ children }) {
       localStorage.setItem("developer", JSON.stringify(res.data));
       return res.data;
     } catch (err) {
-      // FIX: Throw the actual 'err' here as well
       throw err;
     }
   };
@@ -44,7 +41,6 @@ export function AuthProvider({ children }) {
     } catch (err) {
       console.error("Logout request failed on backend", err);
     } finally {
-      // Always clear local application memory even if the network call fails
       setDeveloper(null);
       localStorage.removeItem("developer");
     }
