@@ -1,7 +1,6 @@
 import LevelBadge from "./LevelBadge.jsx";
 import Pagination from "./Pagination.jsx";
 
-// All props come from Logs.jsx which owns all the state
 export default function LogsTable({
   logs,
   loading,
