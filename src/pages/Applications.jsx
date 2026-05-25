@@ -10,15 +10,12 @@ import {
 } from "../api/applicationsApi.js";
 
 export default function Applications() {
-  const [apps, setApps] = useState([]); // list of apps from backend
-  const [loading, setLoading] = useState(true); // true while fetching
+  const [apps, setApps] = useState([]); 
+  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const { developer } = useAuth();
 
-  // useEffect runs after the component first renders
-  // the empty [] means it only runs once — on mount
-  // this is where you fetch data from the backend
   useEffect(() => {
     fetchApps();
   }, []);
@@ -34,8 +31,6 @@ export default function Applications() {
     }
   };
 
-  // called by AppCard when delete is confirmed
-  // filters the deleted app out of state without refetching
   const handleDelete = async (name) => {
     try {
       await deleteApplicationApi(name);
@@ -45,8 +40,6 @@ export default function Applications() {
     }
   };
 
-  // called by CreateAppModal when a new app is created
-  // adds it to the top of the list without refetching
   const handleCreated = (newApp) => {
     setApps((prev) => [newApp, ...prev]);
   };
