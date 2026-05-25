@@ -12,11 +12,8 @@ import {
   CartesianGrid,
 } from "recharts";
 
-// logs — ALL logs for the app (not paginated, we need all for charts)
-// we derive chart data from them here
 export default function Charts({ logs }) {
-  // --- Pie chart data ---
-  // count how many of each level exist
+
   const levelCounts = logs.reduce((acc, log) => {
     acc[log.level] = (acc[log.level] || 0) + 1;
     return acc;
@@ -26,7 +23,7 @@ export default function Charts({ logs }) {
     { name: "INFO", value: levelCounts.INFO || 0 },
     { name: "WARN", value: levelCounts.WARN || 0 },
     { name: "ERROR", value: levelCounts.ERROR || 0 },
-  ].filter((d) => d.value > 0); // don't show levels with 0 logs
+  ].filter((d) => d.value > 0);
 
   const PIE_COLORS = {
     INFO: "#16a34a",
@@ -34,8 +31,6 @@ export default function Charts({ logs }) {
     ERROR: "#dc2626",
   };
 
-  // --- Line chart data ---
-  // group logs by day, count each level per day
   const byDay = logs.reduce((acc, log) => {
     const day = new Date(log.createdAt).toLocaleDateString("en-US", {
       month: "short",
@@ -46,7 +41,6 @@ export default function Charts({ logs }) {
     return acc;
   }, {});
 
-  // sort by date and convert to array
   const lineData = Object.values(byDay).sort(
     (a, b) => new Date(a.day) - new Date(b.day),
   );
