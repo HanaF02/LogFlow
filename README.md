@@ -1,16 +1,98 @@
-# React + Vite
+# LogFlow Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React dashboard for developers to manage and analyze logs from their applications. Built with React, Vite, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Register and login as a developer
+- View your unique API key
+- Create and delete applications
+- View all logs per application in a paginated table
+- Filter logs by level (INFO / WARN / ERROR)
+- Search logs by message
+- Sort by most recent or most occurred
+- Charts showing log level distribution and logs over time
+- Light and dark mode
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 18 + Vite
+- Tailwind CSS v4
+- React Router v6
+- Axios
+- Formik + Yup
+- Recharts
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- Node.js v18+
+- [LogFlow API](https://github.com/HanaF02/LogApp-Backend) running locally or deployed
+
+### Installation
+
+```bash
+git clone https://github.com/HanaF02/LogFlow.git
+cd LogFlow
+npm install
+```
+
+### Environment Variables
+
+Create a `.env` file in the root:
+
+```
+VITE_API_URL=http://localhost:5000
+```
+
+### Run
+
+```bash
+npm run dev
+```
+
+App runs at `http://localhost:5173`
+
+---
+
+## Pages
+
+| Page | Route | Description |
+|------|-------|-------------|
+| Login | `/login` | Sign in with email and password |
+| Register | `/register` | Create a new developer account |
+| Applications | `/applications` | View, create, and delete applications |
+| Logs | `/applications/:name/logs` | View and analyze logs for an app |
+| 404 | `*` | Not found page |
+
+---
+
+## Usage with SDK
+
+Once logged in, copy your API key from the navbar and use it with the [LogFlow SDK](https://www.npmjs.com/package/hana-logflow-sdk):
+
+```bash
+npm install hana-logflow-sdk
+```
+
+```js
+import { init, log } from 'hana-logflow-sdk'
+
+init({
+  apiKey: 'your-api-key',
+  appName: 'your-app-name',
+  baseURL: 'http://localhost:5000'
+})
+
+await log('User signed up', 'INFO')
+await log('Slow query detected', 'WARN')
+await log('Payment service down', 'ERROR')
+```
+
+---
+
+## Related
+
+- [LogFlow API](https://github.com/HanaF02/LogApp-backend)
+- [LogFlow SDK](https://github.com/HanaF02/logflow-sdk) — [npm](https://www.npmjs.com/package/hana-logflow-sdk)
