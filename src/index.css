@@ -5,7 +5,6 @@
   --color-success: #16a34a;
   --color-warning: #d97706;
   --color-danger: #dc2626;
-  --color-primary: #7c3aed /* purple — main actions */;
 }
 button,
 a,
@@ -13,14 +12,11 @@ a,
 select {
   cursor: pointer;
 }
-
-/* Hover float utility — add class="hoverable" to any card or button */
 .hoverable {
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
-
 .hoverable:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
