@@ -13,7 +13,6 @@ export default function Navbar() {
     navigate("/login");
   };
 
-  // copies the API key to clipboard and shows a "Copied!" confirmation for 2 seconds
   const handleCopy = () => {
     navigator.clipboard.writeText(developer.apiKey);
     setCopied(true);
