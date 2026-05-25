@@ -1,13 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-// app — the application object from the backend
-// onDelete — function called when delete is confirmed, passed from Applications.jsx
 export default function AppCard({ app, onDelete }) {
   const navigate = useNavigate();
   const [confirming, setConfirming] = useState(false);
 
-  // format the date nicely
   const createdAt = new Date(app.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -15,13 +12,11 @@ export default function AppCard({ app, onDelete }) {
   });
 
   const handleDelete = (e) => {
-    // stop the click from bubbling up to the card click (which navigates)
     e.stopPropagation();
     if (confirming) {
       onDelete(app.name);
     } else {
       setConfirming(true);
-      // auto cancel confirm after 3 seconds
       setTimeout(() => setConfirming(false), 3000);
     }
   };
