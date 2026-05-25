@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { createApplicationApi } from "../api/applicationsApi.js";
 
-// onClose — called when modal should close
-// onCreated — called with the new app after successful creation
 export default function CreateAppModal({ onClose, onCreated }) {
   const [name, setName] = useState("");
   const [error, setError] = useState(null);
@@ -15,8 +13,8 @@ export default function CreateAppModal({ onClose, onCreated }) {
 
     try {
       const res = await createApplicationApi({ name });
-      onCreated(res.data); // tell the parent about the new app
-      onClose(); // close the modal
+      onCreated(res.data); 
+      onClose();
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
     } finally {
@@ -25,12 +23,10 @@ export default function CreateAppModal({ onClose, onCreated }) {
   };
 
   return (
-    // Backdrop — clicking outside closes the modal
     <div
       className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4"
       onClick={onClose}
     >
-      {/* Modal box — stop click from reaching backdrop */}
       <div
         className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6"
         onClick={(e) => e.stopPropagation()}
