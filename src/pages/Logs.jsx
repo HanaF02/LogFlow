@@ -6,27 +6,21 @@ import Charts from "../components/Charts.jsx";
 import { getLogsApi } from "../api/logsApi.js";
 
 export default function Logs() {
-  // useParams reads the :name from the URL /applications/:name/logs
   const { name } = useParams();
   const navigate = useNavigate();
 
-  // Table state
   const [logs, setLogs] = useState([]);
-  const [allLogs, setAllLogs] = useState([]); // all logs for charts (no pagination)
+  const [allLogs, setAllLogs] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // Filter/sort state
   const [level, setLevel] = useState("");
   const [sort, setSort] = useState("createdAt");
   const [search, setSearch] = useState("");
 
-  // Tab state
   const [activeTab, setActiveTab] = useState("table");
 
-  // useCallback memoizes the function so it doesn't get recreated on every render
-  // the dependency array means it only recreates when those values change
   const fetchLogs = useCallback(async () => {
     setLoading(true);
     try {
@@ -35,8 +29,8 @@ export default function Logs() {
         limit: 10,
         sort,
         order: "desc",
-        ...(level && { level }), // only include if not empty
-        ...(search && { search }), // only include if not empty
+        ...(level && { level }), 
+        ...(search && { search }), 
       });
       setLogs(res.data.logs);
       setTotalPages(res.data.totalPages);
@@ -47,7 +41,6 @@ export default function Logs() {
     }
   }, [name, page, sort, level, search]);
 
-  // Fetch all logs for charts (no pagination, high limit)
   const fetchAllLogs = useCallback(async () => {
     try {
       const res = await getLogsApi(name, { limit: 1000, page: 1 });
@@ -57,17 +50,14 @@ export default function Logs() {
     }
   }, [name]);
 
-  // Runs whenever fetchLogs changes (which is whenever its dependencies change)
   useEffect(() => {
     fetchLogs();
   }, [fetchLogs]);
 
-  // Fetch all logs once on mount for charts
   useEffect(() => {
     fetchAllLogs();
   }, [fetchAllLogs]);
 
-  // When filter/sort/search changes, reset to page 1
   const handleLevelChange = (val) => {
     setLevel(val);
     setPage(1);
