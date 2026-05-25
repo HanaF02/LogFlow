@@ -15,7 +15,6 @@ export default function App() {
           {/* Public routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
           {/* Protected routes */}
           <Route
             path="/applications"
@@ -34,7 +33,6 @@ export default function App() {
             }
           />
           <Route path="/" element={<Navigate to="/applications" replace />} />
-          {/* Default redirect, it is protected so wont acc if unauth */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
