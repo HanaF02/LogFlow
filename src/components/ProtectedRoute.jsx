@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 
 export default function ProtectedRoute({ children }) {
-  const { developer, loading } = useAuth(); //take these from usercontext global objects to use here 
+  const { developer, loading } = useAuth(); 
 
   if (loading) {
     return (
