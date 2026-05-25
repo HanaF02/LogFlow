@@ -4,8 +4,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-// Yup schema — all three fields with their rules
-// .matches() takes a regex and an error message
+
 const schema = Yup.object({
   username: Yup.string()
     .min(3, "Username must be at least 3 characters")
@@ -20,32 +19,28 @@ const schema = Yup.object({
 });
 
 export default function Register() {
-  const { register } = useAuth(); // get register function from global auth context
-  const navigate = useNavigate(); // redirect after successful registration
-  const [serverError, setServerError] = useState(null); // errors coming back from the backend
+  const { register } = useAuth();
+  const navigate = useNavigate(); 
+  const [serverError, setServerError] = useState(null); 
 
   const formik = useFormik({
-    initialValues: { username: "", email: "", password: "" }, // all three fields start empty
+    initialValues: { username: "", email: "", password: "" }, 
 
-    validationSchema: schema, // Formik runs this automatically before every submit
+    validationSchema: schema, 
 
     onSubmit: async (values, { setSubmitting }) => {
-      // values = { username, email, password }
       setServerError(null);
       try {
-        await register(values); // call backend via AuthContext
-        navigate("/applications"); // redirect on success
+        await register(values); 
+        navigate("/applications");
       } catch (err) {
-        // show whatever error message the backend returned
         setServerError(err.response?.data?.message || "Something went wrong");
       } finally {
-        setSubmitting(false); // re-enable button whether it succeeded or failed
+        setSubmitting(false); 
       }
     },
   });
 
-  // reusable helper — returns red border if field has been touched and has an error
-  // otherwise returns normal border
   const inputClass = (field) =>
     `w-full px-4 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 ${
       formik.touched[field] && formik.errors[field]
@@ -61,14 +56,12 @@ export default function Register() {
           <p className="text-slate-500 mt-1 text-sm">Create your account</p>
         </div>
 
-        {/* Server error — only visible when backend returns an error message */}
         {serverError && (
           <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg">
             {serverError}
           </div>
         )}
 
-        {/* formik.handleSubmit validates first, then calls onSubmit if everything passes */}
         <form onSubmit={formik.handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
@@ -77,12 +70,10 @@ export default function Register() {
             <input
               type="text"
               name="username"
-              // getFieldProps spreads value, onChange, onBlur onto the input
               {...formik.getFieldProps("username")}
               className={inputClass("username")}
               placeholder="yourname"
             />
-            {/* touched = user clicked into and out of this field at least once */}
             {formik.touched.username && formik.errors.username && (
               <p className="text-red-500 text-xs mt-1">
                 {formik.errors.username}
@@ -122,13 +113,12 @@ export default function Register() {
                 {formik.errors.password}
               </p>
             )}
-            {/* hint shown below password field regardless of validation state */}
             <p className="text-xs text-slate-400 mt-1">Minimum 6 characters</p>
           </div>
 
           <button
             type="submit"
-            disabled={formik.isSubmitting} // prevents double submit while request is in flight
+            disabled={formik.isSubmitting} 
             className="hoverable w-full bg-violet-600 hover:bg-violet-700 disabled:opacity-50 text-white font-medium py-2.5 rounded-lg text-sm transition-colors"
           >
             {formik.isSubmitting ? "Creating account..." : "Create account"}
