@@ -1,8 +1,6 @@
-// page — current page number
-// totalPages — total number of pages from backend
-// onPageChange — function called with the new page number when user clicks
+
 export default function Pagination({ page, totalPages, onPageChange }) {
-  if (totalPages <= 1) return null; // no point showing pagination for 1 page
+  if (totalPages <= 1) return null; 
 
   return (
     <div className="flex items-center justify-between mt-6">
@@ -19,7 +17,6 @@ export default function Pagination({ page, totalPages, onPageChange }) {
           Previous
         </button>
 
-        {/* Page number buttons — Array.from creates an array of length totalPages */}
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
           <button
             key={p}
